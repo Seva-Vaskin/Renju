@@ -93,7 +93,7 @@ class Board:
     def in_field(pos: Tuple[int, int]) -> bool:
         """Проверяет, что клетка находится в пределах игрового поля."""
         return 0 <= pos[0] < const.BOARD_SIZE[0] and \
-               0 <= pos[1] < const.BOARD_SIZE[1]
+            0 <= pos[1] < const.BOARD_SIZE[1]
 
     def find_max_line(self, start: Tuple[int, int]) \
             -> Tuple[int, Tuple[Tuple[int, int], Tuple[int, int]]]:
