@@ -79,4 +79,3 @@ def do_computers_move(board: Board) -> None:
     """Делает ход компьютера."""
     pos = minimax(board)[1]
     board.do_move(pos)
-
