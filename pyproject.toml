@@ -1,0 +1,8 @@
+[tool.coverage.run]
+source = ["renju"]
+omit = ["renju/__init__.py",
+        "renju/const.py",
+        "renju/game.py",
+        "renju/loader.py",
+        "renju/saver.py",
+        "renju/window.py"]
