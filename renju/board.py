@@ -70,8 +70,6 @@ class Board:
 
     def undo_move(self) -> None:
         """Отменяет ход. Пересчитывает все атрибуты класса."""
-        if not self.moves:
-            return
         self[self.moves[-1]] = CellState.EMPTY
         if self.whose_move == Player.BLACK:
             self.whose_move = Player.WHITE
@@ -80,20 +78,11 @@ class Board:
         self.state = BoardState.GAMING
         self.moves.pop()
 
-    def try_do_move(self, pos: Tuple[int, int]) -> bool:
-        """Если клетка занята, возвращает False,
-        иначе делает ход и возвращает True.
-        """
-        if self[pos]:
-            return False
-        self.do_move(pos)
-        return True
-
     @staticmethod
     def in_field(pos: Tuple[int, int]) -> bool:
         """Проверяет, что клетка находится в пределах игрового поля."""
         return 0 <= pos[0] < const.BOARD_SIZE[0] and \
-            0 <= pos[1] < const.BOARD_SIZE[1]
+               0 <= pos[1] < const.BOARD_SIZE[1]
 
     def find_max_line(self, start: Tuple[int, int]) \
             -> Tuple[int, Tuple[Tuple[int, int], Tuple[int, int]]]:
@@ -145,7 +134,3 @@ class Board:
     def find_wins_line(self) -> Tuple[Tuple[int, int], Tuple[int, int]]:
         """Возвращает координаты начала и конца выигрышной линии."""
         return self.find_max_line(self.moves[-1])[1]
-
-    def clear(self) -> None:
-        """Очищает игровое поле."""
-        self.__init__()

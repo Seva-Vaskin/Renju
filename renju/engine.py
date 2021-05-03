@@ -1,6 +1,7 @@
 """Модуль, реализующий действия компьютера."""
 
 from .board import Board, BoardState, CellState, Player
+from .game import Game
 from . import const
 from typing import Tuple
 
@@ -75,7 +76,7 @@ def rate_function(board: Board) -> int:
     return score
 
 
-def do_computers_move(board: Board) -> None:
+def do_computers_move(game: Game) -> None:
     """Делает ход компьютера."""
-    pos = minimax(board)[1]
-    board.do_move(pos)
+    pos = minimax(game.board)[1]
+    game.do_move(pos)

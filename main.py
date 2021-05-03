@@ -12,7 +12,7 @@ if sys.version_info < (3, 6):
     sys.exit(ERROR_PYTHON_VERSION)
 
 try:
-    from renju import board, engine, const, window
+    from renju import game, engine, const, window, loader
 except Exception as e:
     print('Игровые модули не найдены: "{}"'.format(e), file=sys.stderr)
     sys.exit(ERROR_MODULES_MISSING)
@@ -47,7 +47,12 @@ def parse_args() -> None:
 if __name__ == '__main__':
     parse_args()
     window.init()
-    field = board.Board()
+    try:
+        field = loader.Loader.load_game()
+    except BaseException:
+        field = game.Game()
+    window.draw_board(field)
+    window.try_draw_menu(field)
     running = True
     while running:
-        running = window.events_processing(field)
+        running = window.process_events(field)

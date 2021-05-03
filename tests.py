@@ -1,6 +1,7 @@
 import unittest
 from renju import const
 from renju.board import Board, CellState, BoardState, Player
+from renju.game import Game
 from renju import engine
 import copy
 
@@ -59,10 +60,8 @@ class TestBoard(unittest.TestCase):
 
     def test_undo_move(self):
         board = Board()
-        try:
+        with self.assertRaises(BaseException):
             board.undo_move()
-        except BaseException:
-            self.fail('Отмена хода на пустой доске работает некорректно')
         board.do_move((0, 0))
         board.undo_move()
         for row in range(const.BOARD_SIZE[0]):
@@ -84,25 +83,20 @@ class TestBoard(unittest.TestCase):
                 board.do_move((i * 2, 3))
         self.assertEqual(board.state, BoardState.BLACK_WINS)
         # Тест ситуации, когда выигрвают белые
-        board.clear()
+        board = Board()
         for i in range(const.WIN_ROW_LENGTH):
             board.do_move((4, i * 2))
             board.do_move((10, i + 5))
         self.assertEqual(board.state, BoardState.WHITE_WINS)
         # Тест ситуации, когда ничья
-        board.clear()
         memorized_board_size = const.BOARD_SIZE
         const.BOARD_SIZE = (3, 3)
+        board = Board()
         for row in range(const.BOARD_SIZE[0]):
             for column in range(const.BOARD_SIZE[1]):
                 board.do_move((row, column))
         self.assertEqual(board.state, BoardState.DRAW)
         const.BOARD_SIZE = memorized_board_size
-
-    def test_try_do_move(self):
-        board = Board()
-        self.assertEqual(board.try_do_move((1, 2)), True)
-        self.assertEqual(board.try_do_move((1, 2)), False)
 
     def test_find_wins_line(self):
         board = Board()
@@ -126,7 +120,7 @@ class TestEngine(unittest.TestCase):
             board.do_move((i, 0))
             board.do_move((i, 1))
         self.assertEqual(engine.rate_function(board), const.MINIMAX_INF)
-        board.clear()
+        board = Board()
         board[1, 2] = CellState.BLACK
         board[2, 3] = CellState.BLACK
         self.assertGreater(engine.rate_function(board), 0)
@@ -140,7 +134,7 @@ class TestEngine(unittest.TestCase):
         ans_1 = engine.minimax(board)
         ans_2 = (const.MINIMAX_INF, (const.WIN_ROW_LENGTH - 1, 0))
         self.assertEqual(ans_1, ans_2)
-        board.clear()
+        board = Board()
         memorized_board_size = const.BOARD_SIZE
         const.BOARD_SIZE = (3, 3)
         for row in range(const.BOARD_SIZE[0]):
@@ -153,10 +147,10 @@ class TestEngine(unittest.TestCase):
         const.BOARD_SIZE = memorized_board_size
 
     def test_do_computers_move(self):
-        board = Board()
+        game = Game()
         try:
             for i in range(5):
-                engine.do_computers_move(board)
+                engine.do_computers_move(game)
         except BaseException:
             self.fail("Engine делает некорректные ходы")
 
