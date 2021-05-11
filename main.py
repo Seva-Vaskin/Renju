@@ -12,7 +12,7 @@ if sys.version_info < (3, 6):
     sys.exit(ERROR_PYTHON_VERSION)
 
 try:
-    from renju import game, engine, const, window, loader
+    from renju import game, window, loader
 except Exception as e:
     print('Игровые модули не найдены: "{}"'.format(e), file=sys.stderr)
     sys.exit(ERROR_MODULES_MISSING)
