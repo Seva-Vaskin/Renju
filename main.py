@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
+import sys
+import argparse
 
 ERROR_PYTHON_VERSION = 1
 ERROR_MODULES_MISSING = 2
 ERROR_PYGAME_MISSING = 3
 ERROR_PYGAME_VERSION = 4
-
-import sys
 
 if sys.version_info < (3, 6):
     print('Используйте python >= 3.6', file=sys.stderr)
@@ -26,8 +26,6 @@ except ImportError:
 if pygame.vernum < (1, 9, 6):
     print('Используйте pygame >= 1.9.6', file=sys.stderr)
     sys.exit(ERROR_PYGAME_VERSION)
-
-import argparse
 
 
 def parse_args() -> None:

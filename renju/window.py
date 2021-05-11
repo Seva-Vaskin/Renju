@@ -105,7 +105,7 @@ def draw_menu(game: Game) -> None:
 def get_cell_center(pos: Tuple[int, int]) -> Tuple[int, int]:
     """Возвращает координаты центра клетки на экране."""
     return pos[1] * const.CELL_SIZE + const.CELL_SIZE // 2, \
-           pos[0] * const.CELL_SIZE + const.CELL_SIZE // 2
+        pos[0] * const.CELL_SIZE + const.CELL_SIZE // 2
 
 
 def mouse_pos_to_cell(pos: Tuple[int, int]) -> Tuple[int, int]:
