@@ -162,7 +162,7 @@ def process_rmb_event(game: Game):
 
 
 def process_quit_event(board: Game):
-    """Прекращает работу pygame. Закрывает игровое окно."""
+    """Прекращает работу pygame. Закрывает игровое окно. Сохраняет игру."""
     pygame.display.quit()
     pygame.quit()
     Saver.save_game(board)
