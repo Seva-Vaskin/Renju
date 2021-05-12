@@ -125,7 +125,7 @@ class TestEngine(unittest.TestCase):
         board[2, 3] = CellState.BLACK
         self.assertGreater(engine.rate_function(board), 0)
 
-    def test_mininmax(self):
+    def test_minimax(self):
         board = Board()
         self.assertEqual(engine.minimax(board, const.MAX_MINIMAX_DEPTH)[0],
                          engine.rate_function(board))
